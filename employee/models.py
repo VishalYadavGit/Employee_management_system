@@ -5,7 +5,7 @@ import uuid
 class category(models.Model):
     category_name=models.CharField(max_length=50)
 
-    
+
     def __str__(self):
         return self.category_name
 
@@ -20,4 +20,11 @@ class Employees(models.Model):
     
     def __str__(self):
         return self.name
+    
+class Notice(models.Model):
+    created_at = models.DateField(auto_now_add=True)
+    receipent=models.CharField(max_length=50)
+    subject=models.CharField(max_length=150)
+    message=models.CharField(max_length=400)
+
 

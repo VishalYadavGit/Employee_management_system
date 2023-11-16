@@ -25,5 +25,6 @@ urlpatterns = [
     path('',include('employee.urls')),
     path('employform',views.employform,name="employform"),
     path('delete_employee/<id>',views.delete_employee,name='delete_employee'),
+    path('noticesend',views.noticesend,name='noticesend'),
 
 ]

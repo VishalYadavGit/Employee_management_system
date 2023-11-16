@@ -1,8 +1,18 @@
 from django.shortcuts import render,redirect
 from .models import *
+from django.core.mail import send_mail
 # Create your views here.
 def home(request):
-    return render(request,'index.html')
+    employ=Employees.objects.count()
+    notice=Notice.objects.count()
+    categ=category.objects.count()
+    context={
+        "employeescount":employ,
+        "noticecount":notice,
+        "catecount":categ
+    }
+
+    return render(request,'index.html',context)
 
 def employees(request):
     employ=Employees.objects.all()
@@ -39,7 +49,14 @@ def employform(request):
 
      return redirect('/employees')
 def notice(request):
-    return render(request,'notice.html')
+    employ=Employees.objects.all()
+    notice=Notice.objects.all()
+    context={
+        "employees":employ,
+        "Notices":notice
+    }
+
+    return render(request,'notice.html',context)
 
 def task(request):
     return render(request,'task.html')
@@ -51,3 +68,36 @@ def delete_employee(request,id):
         return redirect('/employees')
       except Exception as e:
           print(e)
+
+def noticesend(request):
+    if request.method=='POST':
+        message=request.POST.get('message')
+        receipent=request.POST.get('receipent')
+        subject=request.POST.get('subject')
+        Notice.objects.create(
+            message=message,
+            receipent=receipent,
+            subject=subject,
+        )
+        if receipent!="Everybody":
+            objectget=Employees.objects.get(name=receipent)
+            email=objectget.mail
+            mail=f'''
+            {email}
+            {subject}
+            {message}
+            '''
+            send_mail(receipent,mail,'',[email])
+
+        else:
+            allobj=Employees.objects.all()
+            for employee in allobj:
+                employee_emails = employee.mail
+                mail=f'''
+                {employee_emails}
+                {subject}
+                {message}
+                '''
+                send_mail(receipent,mail,'',[employee_emails])
+            
+        return redirect('/notice')

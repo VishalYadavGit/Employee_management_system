@@ -1,7 +1,60 @@
 {% extends "base.html" %}
+{% block style %}
+<style>
+   .table{
+      width:100%;
+      background-color: aliceblue;
+
+   }
+</style>
+{% endblock style %}
 {% block right %}
 <div class="right">
    <h1>Notice</h1>
-   
+   <form method="post" action="/noticesend" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="exampleFormControlSelect1">Select Receipent</label>
+        <select class="form-control" required="required" id="exampleFormControlSelect1" name="receipent">
+           <option>Everybody</option>
+          {% for employee in employees  %}
+          <option>{{employee.name}}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+         <label for="exampleFormControlInput1">Subject</label>
+         <input type="text" required="required" class="form-control" id="exampleFormControlInput1" name="subject" placeholder="Subject"></input>
+     </div>
+      <div class="form-group">
+         <label for="exampleFormControlInput1">Message</label>
+         <textarea rows="5" style="resize: vertical;" type="textarea" required="required" class="form-control" id="exampleFormControlInput1" name="message" placeholder="Message"></textarea>
+     </div>
+        <button style="padding: 5px;background-color: gray;" type="submit">Send</button>
+    </form>
+   <h3 style="margin-top:30px">Notice History</h3>
+   <div class="table">
+
+      <table style="width: 100%;background-color: white">
+         <tr>
+            <th>Sr No.</th>
+            <th>Date</th>
+            <th>Recipent</th>
+            <th>subject</th>
+         </tr>
+       
+         {% for Notice in Notices %}
+         <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{Notice.created_at}}</td>
+            <td>{{Notice.receipent}}</td>
+            <td>{{Notice.subject}}</td>
+            <td>
+            </td>
+         </tr>
+         {% endfor %}
+         
+      </table>
+   </div>
 </div>
 {% endblock right %}
