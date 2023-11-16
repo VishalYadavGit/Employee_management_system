@@ -31,39 +31,39 @@
     <button style="padding: 10px;background-color: gray;" onclick="showform()">Add +</button>
    </div>
    <div class="form" id="formdiv" style="display: none;">
-    <form method="post" action="/employform">
+    <form method="post" action="/employform" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="form-group">
           <label for="exampleFormControlInput1">Email address</label>
-          <input type="email" required="required" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+          <input type="email" required="required" class="form-control" id="exampleFormControlInput1" name="mail" placeholder="name@example.com">
         </div>
         <div class="form-group">
             <label for="exampleFormControlInput1">Phone</label>
-            <input type="tel" required="required" class="form-control" id="exampleFormControlInput1" placeholder="+91 XXXXX XXXXX">
+            <input type="tel" required="required" class="form-control" id="exampleFormControlInput1" name="phone" placeholder="+91 XXXXX XXXXX">
           </div>
         <div class="form-group">
             <label for="exampleFormControlInput1">Full Name</label>
-            <input type="text" required="required" class="form-control" id="exampleFormControlInput1" placeholder="Name">
+            <input type="text" required="required" class="form-control" id="exampleFormControlInput1" name="name" placeholder="Name">
         </div>
         <div class="form-group">
             <label for="exampleFormControlInput1">Age</label>
-            <input type="number" required="required" class="form-control" id="exampleFormControlInput1" placeholder="Age" max="100">
+            <input type="number" required="required" class="form-control" id="exampleFormControlInput1" name="age" placeholder="Age" max="100">
         </div>
         <div class="form-group">
           <label for="exampleFormControlSelect1">Category</label>
-          <select class="form-control" required="required" id="exampleFormControlSelect1">
-            {% for employee in employees  %}
-            <option>{{employee.category}}</option>
+          <select class="form-control" required="required" id="exampleFormControlSelect1" name="category">
+            {% for category in categorys  %}
+            <option>{{category.category_name}}</option>
             {% endfor %}
           </select>
         </div>
         <div class="form-group">
             <label for="exampleFormControlInput1">Address</label>
-            <input type="text" required="required" class="form-control" id="exampleFormControlInput1" placeholder="123 Street xyz">
+            <input type="text" required="required" class="form-control" id="exampleFormControlInput1" name="address" placeholder="123 Street xyz">
         </div>
         <div class="form-group">
             <label for="exampleFormControlFile1">Photo</label>
-            <input type="file" required="required" class="form-control-file" id="exampleFormControlFile1">
+            <input type="file" required="required" name="photo" class="form-control-file" id="exampleFormControlFile1">
           </div>
           <button style="padding: 5px;background-color: gray;" type="submit">Submit</button>
       </form>
@@ -76,12 +76,16 @@
                <th>Age</th>
                <th>Category</th>
             </tr>
+            
             {% for employee in employees %}
         <tr>
-          <td>{{employee.id}}</td>
+          <td>{{ forloop.counter }}</td>
           <td>{{employee.name}}</td>
           <td>{{employee.age}}</td>
           <td>{{employee.category}}</td>
+          <td>
+            <a href="{% url 'delete_employee' employee.id %}" class="btn btn-danger" onclick="return confirmDelete()">Remove</a>
+          </td>
         </tr>
         {% endfor %}
         
@@ -92,6 +96,9 @@
 
 {% block script %}
 <script>
+function confirmDelete() {
+    return confirm("Are you sure you want to delete this employee?");
+}
 formdiv=document.getElementById('formdiv');
 var computedStyle = window.getComputedStyle(element);
 function showform(){
