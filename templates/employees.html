@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block style %}
+<style>
+    .employbox{
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        background-color:white;
+        height:auto;
+        
+    }
+    .form{
+        margin-bottom: 50px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse; /* Optional: to collapse borders between cells */
+    }
+    th, td {
+        border: 1px solid #ddd; /* Optional: styling for table borders */
+        padding: 8px;
+        text-align: left; /* Optional: text alignment */
+    }
+    
+</style>
+{% endblock style %}
+{% block right %}
+<div class="right">
+   <h1>Employees</h1>
+   <div>
+    <button style="padding: 10px;background-color: gray;" onclick="showform()">Add +</button>
+   </div>
+   <div class="form" id="formdiv" style="display: none;">
+    <form method="post" action="/employform">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="exampleFormControlInput1">Email address</label>
+          <input type="email" required="required" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlInput1">Phone</label>
+            <input type="tel" required="required" class="form-control" id="exampleFormControlInput1" placeholder="+91 XXXXX XXXXX">
+          </div>
+        <div class="form-group">
+            <label for="exampleFormControlInput1">Full Name</label>
+            <input type="text" required="required" class="form-control" id="exampleFormControlInput1" placeholder="Name">
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlInput1">Age</label>
+            <input type="number" required="required" class="form-control" id="exampleFormControlInput1" placeholder="Age" max="100">
+        </div>
+        <div class="form-group">
+          <label for="exampleFormControlSelect1">Category</label>
+          <select class="form-control" required="required" id="exampleFormControlSelect1">
+            {% for employee in employees  %}
+            <option>{{employee.category}}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlInput1">Address</label>
+            <input type="text" required="required" class="form-control" id="exampleFormControlInput1" placeholder="123 Street xyz">
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlFile1">Photo</label>
+            <input type="file" required="required" class="form-control-file" id="exampleFormControlFile1">
+          </div>
+          <button style="padding: 5px;background-color: gray;" type="submit">Submit</button>
+      </form>
+   </div>
+   <div class="employbox">
+       <table>
+           <tr class="table">
+               <th>Sr No.</th>
+               <th>Name</th>
+               <th>Age</th>
+               <th>Category</th>
+            </tr>
+            {% for employee in employees %}
+        <tr>
+          <td>{{employee.id}}</td>
+          <td>{{employee.name}}</td>
+          <td>{{employee.age}}</td>
+          <td>{{employee.category}}</td>
+        </tr>
+        {% endfor %}
+        
+      </table>
+   </div>
+</div>
+{% endblock right %}
+
+{% block script %}
+<script>
+formdiv=document.getElementById('formdiv');
+var computedStyle = window.getComputedStyle(element);
+function showform(){
+    console.log('clicked')
+    if(formdiv.style.display=="none"){
+        formdiv.style.display="block"
+    }
+    else{
+        formdiv.style.display="none";
+    }
+}
+</script>
+{% endblock script %}

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    {% block title %}
+        
+    {% endblock title %}
+    {% block style %}{% endblock style %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        .primary-nav{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgb(245, 255, 235);
+        height: 6%;
+        letter-spacing: 5px;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        position: sticky;
+        top: 0;
+        
+        
+    }
+    *{
+        margin:0;
+        padding:0;
+    }
+    html,body{
+        height:100%;
+        width:100%;
+        overflow: hidden;
+    }
+    .right{
+            width: 80%;
+            height: 100%;
+            background-color: aquamarine;
+            padding: 30px;
+            overflow-y: scroll;
+            padding-bottom: 100px;
+        }
+        .left{
+            width: 20%;
+            height: 100%;
+            background-color: gray;
+            padding: 30px;
+            position: sticky;
+            top: 0;
+            color: white;
+            
+        }
+        .main{
+            height: 100%;
+            width:100%;
+            display: flex;
+        }
+        .box{
+           display: grid;
+           grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+           
+        }
+        .boxelement{
+            width: 250px;
+            height: 250px;
+            background-color: antiquewhite;
+            margin: 10px;
+            border: 1px solid black;
+        }
+        .nav-link{
+            color: white;
+        }
+
+        .anchor{
+            color: white;
+            text-decoration: none;
+            line-height: 50px;
+            text-align: center;
+        }
+        .anchor:hover{
+            background-color: aquamarine;
+            color: black;
+            text-decoration: none;
+        }
+        
+        
+    </style>
+</head>
+<body>
+    <nav class="primary-nav">
+        Employee Management System
+    </nav>
+    <div class="main">
+        <div class="left">
+            <div class="nav flex-column">
+                <a class="anchor" href="/">Dashboard</a>
+                <a class="anchor" href="employees">Employees</a>
+                <a class="anchor" href="notice">Notice</a>
+                <a class="anchor" href="task" >Task</a>
+              </div>
+              
+        </div>
+        {% block right %}{% endblock right %}
+        
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    {% block script %}{% endblock script %}
+</body>
+</html>
