@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        .primary-nav{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgb(245, 255, 235);
+        height: 6%;
+        letter-spacing: 5px;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        position: sticky;
+        top: 0;
+        
+        
+    }
+    *{
+        margin:0;
+        padding:0;
+    }
+    html,body{
+        height:100%;
+        width:100%;
+        overflow: hidden;
+    }
+    .right{
+            width: 80%;
+            height: 100%;
+            background-color: aquamarine;
+            padding: 30px;
+            overflow-y: scroll;
+            padding-bottom: 100px;
+        }
+        .left{
+            width: 20%;
+            height: 100%;
+            background-color: gray;
+            padding: 30px;
+            position: sticky;
+            top: 0;
+            color: white;
+            
+        }
+        .main{
+            height: 100%;
+            width:100%;
+            display: flex;
+        }
+        .box{
+           display: grid;
+           grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+           
+        }
+        .boxelement{
+            width: 280px;
+            height: 280px;
+            background-color: antiquewhite;
+            margin: 10px;
+            border: 1px solid black;
+            text-align: center;
+            padding: 10px;
+        }
+        .nav-link{
+            color: white;
+        }
+
+        .anchor{
+            color: white;
+            text-decoration: none;
+            line-height: 50px;
+            text-align: center;
+        }
+        .anchor:hover{
+            background-color: aquamarine;
+            color: black;
+            text-decoration: none;
+        }
+              
+        ::-webkit-scrollbar {
+        width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+        background: gray;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+        background: gray;
+        }
+        .background{
+            background-color:aquamarine;
+            width:100%;
+            height:96%;
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+            align-items:center;
+        }
+        .log{
+            width:60%;
+            height:auto;
+            background-color:aliceblue;
+            border-radius: 20px;
+            text-align: center;
+            padding: 30px;
+            min-width: 300px;
+            min-height: 500px;
+
+        }   
+    </style>
+</head>
+<body>
+    <nav class="primary-nav">
+        Employee Management System
+    </nav>
+    <div class="background">
+       <img style="width:200px;text-align:center;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Eo_circle_green_white_checkmark.svg/2048px-Eo_circle_green_white_checkmark.svg.png" alt=""><br>
+       <h2>
+        {{message}}
+       </h2>
+        
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    
+</body>
+</html>

@@ -26,5 +26,8 @@ urlpatterns = [
     path('employform',views.employform,name="employform"),
     path('delete_employee/<id>',views.delete_employee,name='delete_employee'),
     path('noticesend',views.noticesend,name='noticesend'),
+    path('attendance',views.attendance,name='attendance'),
+    path('checkattendance',views.checkattendance,name='checkattendance'),
+    path('attendancesuccess/<new_uuid>',views.attendancesuccess,name='attendancesuccess'),
 
 ]

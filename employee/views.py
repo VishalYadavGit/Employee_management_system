@@ -1,6 +1,10 @@
 from django.shortcuts import render,redirect
 from .models import *
 from django.core.mail import send_mail
+from django.urls import reverse
+from django.contrib import messages
+from datetime import datetime
+from django.http import Http404
 # Create your views here.
 def home(request):
     employ=Employees.objects.count()
@@ -101,3 +105,47 @@ def noticesend(request):
                 send_mail(receipent,mail,'',[employee_emails])
             
         return redirect('/notice')
+
+def attendance(request):
+    return render(request,'attendance.html')
+
+def checkattendance(request):
+    if request.method=='POST':
+        uuid=request.POST.get('uuid')
+        aid=request.POST.get('aid')
+        if aid=="admin123":
+            try:
+                new_uuid = uuid[9:]
+                new_uuid =int(new_uuid)
+                if type(new_uuid)==int:
+                    try:
+                        if Employees.objects.filter(id=new_uuid).exists():
+                            success_url = reverse('attendancesuccess', args=[new_uuid])
+                            return redirect(success_url)
+                        else:
+                            messages.error(request,"Invalid Credentials!!")
+                    except(ValueError):
+                        messages.error(request,"Invalid Credentials!!")
+
+                        
+                else:
+                    messages.error(request,"Invalid Credentials!!")
+            except ValueError:
+                messages.error(request, "Invalid UUID Format!!")
+        else:
+            messages.error(request, "Invalid Credentials!!")
+            return render(request, 'attendance.html')
+        
+def attendancesuccess(request,new_uuid):
+    try:
+        print(type(new_uuid))
+        
+        new_uuid=int(new_uuid)
+        print(type(new_uuid))
+        instance=Employees.objects.get(id=new_uuid)
+        current_datetime = datetime.now()
+        formatted_datetime = current_datetime.strftime("%Y-%m-%d %H:%M:%S")
+        message=f"Thank you {instance.name}!,Your Attendance is done on {formatted_datetime}"
+        return render(request,'atdsuccess.html',{'message': message})
+    except (ValueError, Employees.DoesNotExist):
+        raise Http404("Invalid UUID")

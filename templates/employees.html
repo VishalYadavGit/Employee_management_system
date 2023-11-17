@@ -72,6 +72,7 @@
        <table>
            <tr class="table">
                <th>Sr No.</th>
+               <th>Unique Id</th>
                <th>Name</th>
                <th>Age</th>
                <th>Category</th>
@@ -80,6 +81,7 @@
             {% for employee in employees %}
         <tr>
           <td>{{ forloop.counter }}</td>
+          <td>EMSXEGEND{{employee.id}}</td>
           <td>{{employee.name}}</td>
           <td>{{employee.age}}</td>
           <td>{{employee.category}}</td>
