@@ -17,6 +17,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 import employee
+from django.conf import settings
+from django.conf.urls.static import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from employee import urls
 from employee import views
 
@@ -31,3 +34,7 @@ urlpatterns = [
     path('attendancesuccess/<new_uuid>',views.attendancesuccess,name='attendancesuccess'),
 
 ]
+if settings.DEBUG:
+        urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+        
+urlpatterns += staticfiles_urlpatterns()

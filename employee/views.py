@@ -4,6 +4,8 @@ from django.core.mail import send_mail
 from django.urls import reverse
 from django.contrib import messages
 from datetime import datetime
+from django.utils.dateformat import DateFormat
+from datetime import date,timedelta
 from django.http import Http404
 # Create your views here.
 def home(request):
@@ -34,6 +36,7 @@ def employform(request):
      age=request.POST.get('age')
      address=request.POST.get('address')
      phone=request.POST.get('phone')
+     salary=request.POST.get('salary')
      mail=request.POST.get('mail') 
      photo=request.FILES.get('photo')
      category_name = request.POST.get('category')
@@ -46,12 +49,11 @@ def employform(request):
          address=address,
          photo=photo,
          category=category_instance,
-         age=age
+         age=age,
+         salary=salary
      )
-     
-
-
      return redirect('/employees')
+    
 def notice(request):
     employ=Employees.objects.all()
     notice=Notice.objects.all()
@@ -63,7 +65,36 @@ def notice(request):
     return render(request,'notice.html',context)
 
 def task(request):
-    return render(request,'task.html')
+    employees = Employees.objects.all()
+    current_date = date.today()
+    start_of_month = current_date.replace(day=1)
+    end_of_month = (start_of_month + timedelta(days=32)).replace(day=1) - timedelta(days=1)
+    all_dates = [start_of_month + timedelta(days=i) for i in range((end_of_month - start_of_month).days + 1)]
+
+    # Create a list of dictionaries to store attendance data for each employee and date
+    attendance_data = []
+    for employee in employees:
+        employee_data = {'employee': employee, 'attendance': []}
+        present_count = 0
+        for current_date in all_dates:
+            attendance_record, created = Attendance.objects.get_or_create(employee=employee, date=current_date)
+            employee_data['attendance'].append({'date': current_date, 'status': attendance_record.status})
+            if attendance_record.status == 'P':
+                present_count += 1  # Increment count for present days
+        employee_data['present_count'] = present_count
+        employee_data['estimated_salary'] = employee.salary * present_count
+        attendance_data.append(employee_data)
+        current_month_year = DateFormat(current_date).format('F Y')
+
+
+    context = {
+        'employees': employees,
+        'all_dates': all_dates,
+        'attendance_data': attendance_data,
+        'current_month_year':current_month_year
+    }
+
+    return render(request, 'task.html', context)
 
 def delete_employee(request,id):
       try:
@@ -107,7 +138,8 @@ def noticesend(request):
         return redirect('/notice')
 
 def attendance(request):
-    return render(request,'attendance.html')
+    employees=Employees.objects.all()
+    return render(request,'attendance.html',{"employees":employees})
 
 def checkattendance(request):
     if request.method=='POST':
@@ -120,6 +152,10 @@ def checkattendance(request):
                 if type(new_uuid)==int:
                     try:
                         if Employees.objects.filter(id=new_uuid).exists():
+                            get_employee=Employees.objects.get(id=new_uuid)
+                            attendance_record, created = Attendance.objects.get_or_create(employee=get_employee, date=date.today())
+                            attendance_record.status = 'P'
+                            attendance_record.save()
                             success_url = reverse('attendancesuccess', args=[new_uuid])
                             return redirect(success_url)
                         else:

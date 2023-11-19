@@ -112,7 +112,9 @@ USE_I18N = True
 
 USE_TZ = True
 
-
+CSRF_TRUSTED_ORIGINS = [
+    'https://eebd-202-179-72-111.ngrok-free.app'
+]
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
@@ -126,7 +128,7 @@ STATICFILES_DIR = {
     os.path.join(BASE_DIR,"public/static")
 }
 
-MEDIA_ROOT = os.path.join(BASE_DIR,'public/static')
+MEDIA_ROOT = os.path.join(BASE_DIR,'public\static')
 MEDIA_URL='/media/'
 
 STATICFILES_DIRS = [

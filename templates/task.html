@@ -1,7 +1,101 @@
 {% extends "base.html" %}
+{% block style %}
+<style>
+.background{
+   background-color:white;
+   height: auto;
+   width: 100%;
+   padding: 20px;
+}
+
+.ball{
+   width: 200px;
+   height: 200px;
+   /* border-radius: 50%; */
+   border: 1px solid black;
+   padding: 4px;
+   margin:1px;
+   text-align:center;
+   font-size: 20px;
+}
+table {
+   width: 100%;
+   border-collapse: collapse; /* Optional: to collapse borders between cells */
+   background-color:white;
+}
+th, td {
+   border: 1px solid #ddd; /* Optional: styling for table borders */
+   padding: 8px;
+   text-align: left; /* Optional: text alignment */
+}
+.tablediv{
+   width:100%;
+   overflow-x: scroll;
+}
+.red-bg {
+      background-color: red;
+    }
+
+.green-bg {
+      background-color: green;
+    }
+   .status{
+      text-align: center;
+   }
+</style>
+{% endblock style %}
 {% block right %}
 <div class="right">
-   <h1>Task</h1>
-   
-</div>
+   <h1>Attendance-{{current_month_year}}</h1>
+   <div class="tablediv">
+      <table border="1">
+         <thead>
+            <tr>
+              <th>Employee</th>
+              {% for current_date in all_dates %}
+                <th>{{ current_date|date:"d-m-y" }}</th>
+              {% endfor %}
+            </tr>
+          </thead>
+          <tbody>
+            {% for employee_data in attendance_data %}
+              <tr>
+                <td>{{ employee_data.employee.name }}</td>
+                {% for attendance_entry in employee_data.attendance %}
+                  <td class="status">{{ attendance_entry.status }}</td>
+                {% endfor %}
+              </tr>
+            {% endfor %}
+          </tbody>
+          </table>
+   </div>
+      <h2>Salary Projections</h2>
+      <table>
+         <thead>
+            <tr>
+               <th>Name</th>
+            <th>Estimated Salary</th>
+         </tr>
+         </thead>
+         <tbody>
+            {% for employee_data in attendance_data %}
+            <tr>
+              <td>{{ employee_data.employee.name }}</td>
+              <td>₹{{ employee_data.estimated_salary}}</td>
+            </tr>
+          {% endfor %}
+         </tbody>
+      </table>
+   </div>
+   <script>
+   var statusCells = document.querySelectorAll('.status');
+   statusCells.forEach(function(cell) {
+   var status = cell.innerText.trim();
+    if (status === 'A') {
+    cell.classList.add('red-bg');
+   } else if (status === 'P') {
+    cell.classList.add('green-bg');
+    }
+   });
+   </script>
 {% endblock right %}
