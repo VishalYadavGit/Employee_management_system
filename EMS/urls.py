@@ -31,6 +31,7 @@ urlpatterns = [
     path('noticesend',views.noticesend,name='noticesend'),
     path('attendance',views.attendance,name='attendance'),
     path('checkattendance',views.checkattendance,name='checkattendance'),
+    path('catform',views.catform,name='catform'),
     path('attendancesuccess/<new_uuid>',views.attendancesuccess,name='attendancesuccess'),
 
 ]

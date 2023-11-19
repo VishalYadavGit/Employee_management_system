@@ -63,7 +63,13 @@ def notice(request):
     }
 
     return render(request,'notice.html',context)
-
+def catform(request):
+    if request.method=='POST':
+        cat=request.POST.get('cat')
+        category.objects.create(
+            category_name=cat
+        )
+        return redirect('/employees')
 def task(request):
     employees = Employees.objects.all()
     current_date = date.today()

@@ -30,9 +30,20 @@
 {% block right %}
 <div class="right">
    <h1>Employees</h1>
-   <div>
-    <button style="padding: 10px;background-color: gray;" onclick="showform()">Add +</button>
+   <div style="margin-bottom:20px">
+    <button style="padding: 10px;background-color: gray;" onclick="showform()">Add Employee</button>
+    <button style="padding: 10px;background-color: gray;" onclick="showform2()">Add Category</button>
    </div>
+   <div class="form" id="catdiv" style="display: none;">
+    <form method="post" action="/catform" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-group">
+    <label for="exampleFormControlInput1">Category</label>
+    <input type="text" required="required" class="form-control" id="exampleFormControlInput1" name="cat" placeholder="Enter Category Name">
+    </div>
+    <button style="padding: 5px;background-color: gray;" type="submit">Add</button>
+    </form>
+    </div>
    <div class="form" id="formdiv" style="display: none;">
     <form method="post" action="/employform" enctype="multipart/form-data">
         {% csrf_token %}
@@ -111,7 +122,6 @@ function confirmDelete() {
     return confirm("Are you sure you want to delete this employee?");
 }
 formdiv=document.getElementById('formdiv');
-var computedStyle = window.getComputedStyle(element);
 function showform(){
     console.log('clicked')
     if(formdiv.style.display=="none"){
@@ -119,6 +129,16 @@ function showform(){
     }
     else{
         formdiv.style.display="none";
+    }
+}
+catdiv=document.getElementById('catdiv');
+function showform2(){
+    console.log('clicked')
+    if(catdiv.style.display=="none"){
+        catdiv.style.display="block"
+    }
+    else{
+        catdiv.style.display="none";
     }
 }
 </script>
